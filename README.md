@@ -30,11 +30,6 @@ ollama serve
 ollama pull qwen:7b
 ```
 
-**DeepSeek 7B:**
-```bash
-ollama pull deepseek-coder:7b
-```
-
 ### Running the Application
 
 #### Start MCP Server
