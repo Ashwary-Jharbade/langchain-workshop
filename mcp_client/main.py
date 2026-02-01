@@ -1,12 +1,13 @@
 import os
 from dotenv import load_dotenv
-load_dotenv()
 import asyncio
 from langchain_mcp_adapters.client import MultiServerMCPClient
 from langchain_mcp_adapters.tools import load_mcp_tools
 from langchain_core.messages import HumanMessage, AIMessage
 from langchain_core.prompts import ChatPromptTemplate
 from local_llm.core import getAgent, getLLM
+
+load_dotenv()
 
 TAVILY_API_KEY = os.getenv("TAVILY_API_KEY")
 

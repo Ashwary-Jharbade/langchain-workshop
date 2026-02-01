@@ -13,6 +13,7 @@ def getLLM(model="", streaming=False, temperature=0.7):
         )
 
 def normalize_to_messages(x):
+    # print("Normalizing to messages:", x)
     # Case 1: streaming chunk → full AIMessage
     if isinstance(x, AIMessageChunk):
         return [AIMessage(content=x.content)]
@@ -66,7 +67,7 @@ def getAgent(system_prompt="", model="", streaming=True, temperature=0.7, tools=
 
 
     llm = getLLM(model=model, streaming=streaming, temperature=temperature)
-    llm_with_tools = llm.bind_tools(tools)
+    
     prompt = ChatPromptTemplate.from_messages(
         [
             ("system", system_prompt),
@@ -79,15 +80,20 @@ def getAgent(system_prompt="", model="", streaming=True, temperature=0.7, tools=
                 ("human", "{message}"),
             ]
         )
-        
-    agent = (
-        RunnablePassthrough()
-        | prompt
-        | llm_with_tools
-        | RunnableLambda(call_tool)
-        | RunnableLambda(normalize_to_messages)
-        | llm
-    )
+    
+    agent = prompt | llm
+
+    if tools and len(tools) > 0:
+        llm_with_tools = llm.bind_tools(tools)
+
+        agent = (
+            RunnablePassthrough()
+            | prompt
+            | llm_with_tools
+            | RunnableLambda(call_tool)
+            | RunnableLambda(normalize_to_messages)
+            | llm
+        )
     return agent
 
 def invoke_agent_and_stream_response(agent, message):

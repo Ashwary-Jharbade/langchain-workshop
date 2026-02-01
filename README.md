@@ -50,3 +50,15 @@ python -m workshop_learnings.basic_agent
 ```bash
 python -m workshop_learnings.basic_tool_call
 ```
+
+```bash
+python -m workshop_learnings.basic_sequential_agent
+```
+
+```bash
+python -m workshop_learnings.basic_sequential_agent_search_tool
+```
+
+```bash
+python -m workshop_learnings.basic_sequential_agent_with_mcp
+```
